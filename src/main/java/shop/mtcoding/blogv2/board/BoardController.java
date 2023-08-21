@@ -20,7 +20,16 @@ public class BoardController {
     @Autowired
     private BoardService boardService;
 
-    @PostMapping("/board/update")
+    @Autowired
+    private BoardRepository boardRepository;
+
+    @GetMapping("/test/board/{id}")
+    public @ResponseBody Board testDetail(@PathVariable Integer id) {
+        Board board = boardRepository.mFindByIdJoinRepliesInUser(id).get();
+        return board;
+    }
+
+    @PostMapping("/board/{id}/update")
     public String update(@PathVariable Integer id, BoardRequest.UpdateDTO updateDTO) {
         // where 데이터, body, session값
         boardService.게시글수정하기(id, updateDTO);

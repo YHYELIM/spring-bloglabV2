@@ -17,5 +17,13 @@ public class BoardRequest {
     public static class SaveDTO {
         private String title;
         private String content;
+
+        public String getComment() {
+            return null;
+        }
+
+        public Integer getBoardId() {
+            return null;
+        }
     }
 }

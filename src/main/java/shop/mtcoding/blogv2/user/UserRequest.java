@@ -1,5 +1,7 @@
 package shop.mtcoding.blogv2.user;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +14,7 @@ public class UserRequest {
         private String username;
         private String password;
         private String email;
+        private MultipartFile pic;
     }
 
     @Getter
@@ -25,5 +28,6 @@ public class UserRequest {
     @Setter
     public static class UpdateDTO {
         private String password;
+        private MultipartFile pic;// 수정된 사진 받음
     }
 }

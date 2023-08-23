@@ -43,7 +43,7 @@ public class BoardController {
         return "board/updateForm";
     }
 
-    @PostMapping("/board/{id}/delete")
+    @PostMapping("/board/{id}/delete") // 주소에 api 붙이는 이유 : 안붙어있으니까 myexception
     public @ResponseBody String delete(@PathVariable Integer id) {
         boardService.삭제하기(id);
         return Script.href("/");

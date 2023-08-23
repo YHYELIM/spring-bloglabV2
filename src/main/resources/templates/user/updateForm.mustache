@@ -1,11 +1,21 @@
 {{> layout/header}}
+<style>
+    .circle_avatar{
+        width: 200px;
+        height: 200px;
+        border-radius: 100px;
+    }
+</style>
 
 <div class="container p-5">
 
     <div class="card">
         <div class="card-header"><b>회원수정을 해주세요</b></div>
+        <div class="card-header d-flex justify-content-center" >
+            <img id="preview" class="circle_avatar" src="/images/{{user.picUrl}}">
+        </div>
         <div class="card-body">
-            <form action="/user/update" method="post">
+            <form action="/user/update" method="post" enctype="multipart/form-data">
                 <div class="mb-3">
                     <input type="text" class="form-control" placeholder="Enter username" disabled
                         value="{{user.username}}">
@@ -16,10 +26,38 @@
                 <div class="mb-3">
                     <input type="email" class="form-control" placeholder="Enter email" disabled value="{{user.email}}">
                 </div>
+                <div class="mb-3">
+                    <input type="file" class="form-control" placeholder="Enter pic" onchange="changePic(event)" name="pic" >
+                </div>            
                 <button type="submit" class="btn btn-primary form-control">회원가입수정</button>
             </form>
         </div>
     </div>
 </div>
+
+<script>
+    function changePic(e1){
+        console.log(e1);
+        let f = e1.srcElement.files[0];//이벤트로 부터 파일 객체를 찾아냄 파일의 정보만 들고 있다
+        console.log(f);
+
+        let reader = new FileReader();//버퍼를 하나 만들어서 메모리로끌어올림
+        // reader.onload = function(e2){ // 파일이 다 읽어지면 콜백됨
+        
+            if(!f.type.match("image.*")){
+                alert("이미지를 등록해주세요")
+                return;
+            }
+            
+            //읽기전에 온로드 함수만 걸어둠 실행 안됨
+            //변수가 함수에 담김
+            
+        //     let previewEl = document.querySelector("#preview");
+        //     previewEl.setAttribute("src", e2.target.result);
+        //속성값을 넣어준다 
+        // }
+        reader.readAsDataURL(f); // 파일 읽기 onload() //이벤트를 다 읽으면
+    }
+</script>
 
 {{> layout/footer}}

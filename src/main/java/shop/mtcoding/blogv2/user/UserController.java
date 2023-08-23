@@ -7,9 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import shop.mtcoding.blogv2._core.error.ex.MyException;
+import shop.mtcoding.blogv2._core.util.ApiUtil;
 import shop.mtcoding.blogv2._core.util.Script;
+import shop.mtcoding.blogv2.reply.ReplyRequest;
 
 @Controller
 public class UserController {
@@ -39,6 +43,10 @@ public class UserController {
     // M - V - C
     @PostMapping("/join")
     public String join(UserRequest.JoinDTO joinDTO) {
+        // System.out.println(joinDTO.getPic().getOriginalFilename());
+        // System.out.println(joinDTO.getPic().getSize());
+        // System.out.println(joinDTO.getPic().getContentType());
+
         userService.회원가입(joinDTO);
         return "user/loginForm"; // persist 초기화
     }
@@ -52,8 +60,10 @@ public class UserController {
     public @ResponseBody String login(UserRequest.LoginDTO loginDTO) {
         User sessionUser = userService.로그인(loginDTO);
         if (sessionUser == null) {
-            return Script.back("로그인 실패");
+            throw new MyException("로그인 실패");
+            // return Script.back("로그인 실패");//이렇게 하는거 아님
         }
+
         session.setAttribute("sessionUser", sessionUser);
         return Script.href("/");
     }
@@ -74,5 +84,18 @@ public class UserController {
         User user = userService.회원수정(updateDTO, sessionUser.getId());
         session.setAttribute("sessionUser", user);
         return "redirect:/";
+    }
+
+    @GetMapping("/api/user/check")
+    public @ResponseBody ApiUtil<String> check(String username) {
+        // 앞에서 json값 받음
+        // 서비스 호출(유저네임 비교)
+        System.out.println("1234");
+
+        userService.유저네임(username);
+        System.out.println("5678");
+
+        return new ApiUtil<String>(false, "유저네임 중복");
+
     }
 }

@@ -42,7 +42,7 @@ public class Board {
     @Column(nullable = false, length = 100)
     private String title;
 
-    @Lob // html태그가 db에 저장
+    @Lob // 대용량 데이턴가 db에 저장
     @Column(nullable = true, length = 10000)
     private String content;
 

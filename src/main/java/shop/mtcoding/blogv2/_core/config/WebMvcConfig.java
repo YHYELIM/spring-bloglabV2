@@ -1,9 +1,12 @@
 package shop.mtcoding.blogv2._core.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.resource.PathResourceResolver;
+
+import shop.mtcoding.blogv2._core.interceptor.LoginInterceptor;
 
 //톰켓이 결국엔 자바 파일로 
 //yml파일등 결국에는 자바파일로 바꾼다
@@ -31,6 +34,15 @@ public class WebMvcConfig implements WebMvcConfigurer {// 오버라이드 되려
                 .resourceChain(true)
                 .addResolver(new PathResourceResolver());
 
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new LoginInterceptor())
+                .addPathPatterns("/user/update", "/user/updateForm")
+                .addPathPatterns("/api/**")
+                .addPathPatterns("/board/**")// 발동 조건
+                .excludePathPatterns("/board/{id:[0-9]+}");// 발동 제외
     }
 
 }

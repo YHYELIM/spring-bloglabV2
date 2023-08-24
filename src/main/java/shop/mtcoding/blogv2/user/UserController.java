@@ -82,7 +82,7 @@ public class UserController {
         // 2. 세션동기화
         User sessionUser = (User) session.getAttribute("sessionUser");
         User user = userService.회원수정(updateDTO, sessionUser.getId());
-        session.setAttribute("sessionUser", user);
+        session.setAttribute("sessionUser", user); // 유저 정보 담았으니까 머스태치 파일에서 빼낼 수 있다
         return "redirect:/";
     }
 

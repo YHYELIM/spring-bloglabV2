@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import shop.mtcoding.blogv2._core.error.ex.MyApiException;
 import shop.mtcoding.blogv2._core.error.ex.MyException;
-import shop.mtcoding.blogv2._core.vo.MyParh;
 import shop.mtcoding.blogv2._core.vo.MyPath;
 import shop.mtcoding.blogv2.user.UserRequest.JoinDTO;
 import shop.mtcoding.blogv2.user.UserRequest.LoginDTO;
